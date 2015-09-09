@@ -1,0 +1,194 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<h1 id="main-title"> Procedure on How to Use the Database Virtual Labs </h1>
+<h2>Introduction </h2>
+<p>In the database virtual lab pages, you will notice that <i>descriptions</i> of concepts and techniques are interspersed with illustrative <i>simulations</i>. The simulations appear as and when the concepts are introduced. Thus, the traditional separation of theory and simulation is rather loose and the style is more tutorial-like, leading to a smoother flow and easier learning experience.</p>
+
+<p>This has been made possible using a technology called <a href="http://www.sagemath.org/">sage</a>, which is built upon the <a href="http://www.python.org">python</a> programming language. To use these labs, it is <i>not</i> necessary to learn these technologies. Nevertheless, some familiarity with SAGE and Python concepts will be helpful. This page is designed to provide this familiarity.</p>
+
+<h2>Sage</h2> 
+<p>The entire contents of each database virtual lab is present in a single sage <i>worksheet</i>. Even the current page that you are viewing is a sage worksheet. One of the features that distinguish a sage worksheet from a regular web page is the presence of "cells" that are editable and executable. The following is an example of a cell:
+
+{{{id=1|
+3*4+2^4
+///
+28
+}}}
+
+<p>Click on the cell above. You will see an "evaluate" link appear below the cell. You will also be able to edit the contents of the cell. If this doesn't happen, then you are not in 'Edit' mode. To enter 'Edit' mode click on the 'Edit a copy' (or 'Log in to edit a copy') link at the top-left of this page'.</p>
+
+<p><b>Creating a Login:</b> If you have not already created a login, then click on the 'Log in to edit a copy' link and then 'Sign up for a new Sage Notebook account'. Signing up is easy. Enter a username and any password that you would remember easily. Then come back to the login screen and login with your username/password. You will reach a page listing all your worksheets. Initially, this list will be empty. Click on the 'Published' link on the top-right corner, and you will see a list of published worksheets. Click on the 'Databases Virtual Lab' worksheet to return back to the databases virtual lab home page.</p>
+
+<p>You can also insert a new cell above or below any existing cell.  To insert a new cell, put your cursor above (respectively, below) the cell until you see a purple or blue (depending on your browser) horizontal line pop up.  Click on this horizontal line to produce a new cell.  Try that on the cell above and then type in some other complicated expression of numbers and then click "evaluate".</p>
+
+<h2>Making a Local Copy of a Sage Worksheet</h2>
+<p>To save a copy of a sage worksheet on your local computer, click on the "File..." drop-down box above and select "Save worksheet to a file...". If you do not find the "File..." drop-down box, then you are probably not logged in. Instead, you will find a "Download" link at the top of the page and can use that link instead. In either case, a ".sws" format file will be downloaded to your computer.</p>
+
+<p>You can use the "Load worksheet from a file..." option in the "File..." drop-down box to load back a worksheet that you saved earlier. If you wish, you can optionally install sage on your local computer by visiting the <a href="http://www.sagemath.org/">sage website</a>. Sage is a free and open source software (FOSS). If you are able to install it successfully, then you can load the saved worksheets into your own sage installation. This way you can install all the database virtual labs, which are basically sage worksheets, into your own computer.</p>
+
+<h2>Python</h2>
+<p>The expressions that you have typed into sage cells are <i>python</i> expressions. Behind the scenes, a python language interpreter evaluates the expressions that you type and returns its result which is displayed. This means that the content of a cell can even be a complete python program (not just a small expression).</p>
+
+<p>Luckily, you don't have to learn python formally to use the database virtual labs. This is because python is more-or-less like <i>pseudo-code</i> and is very easy to read. In the following paragraphs, you will learn most of what you need to know about python to use the virtual labs. To learn more, you are encouraged to visit the <a href="http://www.python.org">python website</a> and download python for your computer along with its complete documentation. Python is also free and open source.</p>
+
+<h2>Data Types</h2>
+<p>The following are the basic built-in data types in python, along with a few examples. Any of them can be used in expressions and programs that you type into sage cells.</p>
+
+<ol>
+<li><b>Numbers:</b> 32, 3.14, 3.14e-10, 0x4ff (hexadecimal), 017 (octal), 3+1j (complex number)</li>
+<li><b>Strings:</b> 'spam', "ham" (can also use 3 quotes like ''' or """ to span multiple lines)</li>
+<li><b>Lists:</b> [1,2,3,4], ['a','b',1,2,3]</li>
+<li><b>Dictionaries:</b> {'jan':1, 'feb':2, 'mar':3}</li>
+<li><b>Tuples:</b> (1,2,3,4) (like list, but cannot change content after creation)</li>
+</ol>
+
+<p>Lists, dictionaries and tuples can be arbitrarily nested (like ['abc', [(1,2), ([3], 4)], 5]). Together these can represent complex, efficient data structures and data sets.</p>
+
+<p>Like any programming language, you can assign a value to a <i>variable</i> and change that value later. For example:</p>
+
+{{{id=2|
+x = 1+2j
+y = 3+4j
+x = x - 1
+print x + y
+///
+}}}
+
+<p>Note that if the content of a cell is a program (and not an expression), then you must use the 'print' statement like above to display results.</p>
+
+<p>If <i>x</i> is a list (like [1,2,3,4], individual elements in <i>x</i> can be accessed as <i>x[i]</i>, where <i>i</i> is an index. Lists are like arrays (available in most programming languages). If <i>x</i> is a dictionary (like {'jan':1, 'feb':2, 'mar':3}), the value corresponding to a key (like 'jan') can be accessed as <i>x['jan']</i>. In this case, the value would be the integer 1. Dictionaries correspond to maps or hashes that are available in some programming languages. A tuple is like a list, but once created, its value cannot be modified. One advantage of tuples is that they can act as keys in dictionaries, whereas lists cannot. This is because dictionaries require their keys to be <i>immutable</i>. Following are some examples:</p>
+
+{{{id=3|
+x=[1,2,3,4]
+print x[0] #first element in x
+print x[1:3] #elements 1..3, but not including 3
+x={'jan':1, 'feb':2, 'mar':3}
+print x['jan']
+print x.keys() #list of keys of x
+print x.values()
+///
+}}}
+
+<h2>Calling Functions</h2>
+
+{{{id=10|
+x=[1,2,3,4]
+print sum(x)
+y='ABCDE'
+print len(y)
+///
+}}}
+
+<p>In the above, sum() and len() are functions that return the sum and length, respectively, of an input sequence. They are standard functions defined in python.</p>
+
+<h3>Standard Functions Provided in DB Virtual Labs</h3>
+<p>In the virtual labs that discuss SQL, we provide a standard function <b>sql()</b> to execute any SQL statement. It takes as argument any SQL statement provided as a string. Note that this is different from what you would expect in a regular DBMS setup, where you typically have to run a command-line utility that provides an SQL prompt. At this prompt you can type SQL commands directly without enclosing them as a string.</p>
+
+<p>Similarly, we provide functions <b>showER()</b>, <b>showEER()</b> and <b>showRel()</b> to display the ER diagram, Enhanced-ER diagram and relational tables respectively in the appropriate virtual labs.</p>
+
+<h2>Statements</h2>
+The remainder of this document contains more details of python, which may be useful, but are not strictly necessary to understand the virtual labs.  Still more information is available in the standard documentation of python available at: <a href="http://docs.python.org">docs.python.org</a>.
+
+Python supports the following kinds of statements:
+<h3>Assignments</h3>
+
+{{{id=4|
+i = 'dosa' # basic form
+i1 = i2 = 'lunch' # multi-target
+i, j = 'dosa', 'idli' #tuple assignment
+i, j = j, i # swap
+i, j = j+i, i # first eval all right
+i, j = ['dosa', 'idli'] # list assignment
+///
+}}}
+
+<h3>Expressions</h3>
+
+{{{id=5|
+func(a, b)		# function calls
+x.func(23)		# method calls
+item1			# print interactive
+item1 < 'e' and item != 'idli'				# compound expr's
+# <, >, <=, >=, ==, !=, and, or, not, ()
+item1 < item2 < 'e' 	# range tests
+///
+}}}
+
+<h3>if</h3>
+
+{{{id=6|
+x = 'killer rabbit'
+if x == 'bunny':
+    print 'hello little bunny'
+elif x == 'bugs':
+    print “what's up doc?”
+else:
+    print 'Run away!'
+///
+}}}
+
+Note that blocks are created using indentation rather than explicit begin/end statements. This makes the code more concise and enforces good indentation practices.
+<h3>while/break/continue</h3>
+
+{{{id=7|
+x = y / 2
+while x > 1:
+    if y % x == 0: # remainder
+        print y, 'has factor', x
+        break  # skip else
+    x = x-1
+else:  # normal exit
+    print y, 'is prime'
+///
+}}}
+
+<h3>for/break/continue</h3>
+
+{{{id=8|
+for x in ['dosa', 'idli', 'upma']:
+    print x,
+for x in range(2,14): print x,
+///
+}}}
+
+<h2>Functions</h2>
+
+{{{id=9|
+def intersect(seq1, seq2):
+    '''Intersect any two sequences'''
+    res = [] # start empty
+    for x in seq1: # scan seq1
+        if x in seq2: # common item?
+            res.append(x) # add to end
+    return res
+
+#--- calling the above function
+s1 = 'SPAM'
+s2 = 'SCAM'
+print intersect(s1,s2)
+print intersect([1,2,3],(1,4))
+ict = intersect
+print ict([1,2,3],(1,4))
+///
+}}}
+
+<p>Note that the arguments to functions can be of any type. So it is not necessary to implement separate functions for each type.</p>
+
+At the end of each sage worksheet, typically a cell is provided, perhaps in order to do any rough-work!
+
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/?lab=cse07">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=21|
+
+///
+}}}

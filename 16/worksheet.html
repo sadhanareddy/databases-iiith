@@ -1,0 +1,199 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<!--h1 id="main-title">First Normal Form</h1-->
+<div id="introduction">
+<h2>Introduction </h2>
+	
+<p>In the previous lab session, we have seen how to create a relational model from an ER or EER model. This means that for our application, we have finally created a set of tables and fixed their attributes / columns. This (set of tables and attributes) is often called as a <b>schema</b> or <b>design</b> of our relational model. Not all designs are equally good &ndash; some are good and some are bad.</p>
+
+<p>Researchers have devised some rules called <b>normal forms</b> &ndash; these are constraints that a design should follow in order to be good. These are not hard-and-fast rules that should blindly be followed in all situations, but rather <i>guidelines</i>. Many normal forms exist, although 4 of them are most popular and these are covered in different lab sessions starting from this one.</p>
+</div>
+
+<div id="theory">
+<h2>Theory</h2>
+
+<p>First normal form (1NF or Minimal Form) requires that all tables (in a schema) have a <i>fixed</i> size. Fixed size means that all rows should have the same number of columns and there should not be any <i>multi-valued</i> columns. 1NF sets the very basic rules for an organized relational database:</p>
+
+<ol>
+<li>Eliminate duplicate columns from the same table.</li>
+<li>Create separate tables for each group of related data and identify each row with a unique column (the primary key).</li>
+</ol>
+
+<p>What do these rules mean when contemplating the practical design of a database?  It&#8217;s actually quite simple.</p>
+
+<p>The first rule dictates that we must not duplicate columns within the same row of a table. Within the database community, this concept is referred to as the atomicity of a table.  Tables that comply with this rule are said to be atomic.  Let&#8217;s explore this principle with a classic example &#8211; a table within a human resources database that stores the manager-subordinate relationship.  For the purposes of our example, we&#8217;ll impose the business rule that each manager may have one or more subordinates while each subordinate may have only one manager.</p>
+
+<p>Intuitively, when creating a list or spreadsheet to track this information, we might create a table with the following fields:</p>
+
+<table border="1">
+<tr>
+<th>Manager</th>
+<th>Subordinate1</th>
+<th>Subordinate2</th>
+<th>Subordinate3</th>
+<th>Subordinate4</th>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</table>
+
+<p>However, recall the first rule imposed by 1NF: eliminate duplicative columns from the same table.  The Subordinate1-Subordinate4 columns are duplicative.  Take a moment and ponder the problems raised by this scenario.  If a manager only has one subordinate &#8211; the Subordinate2-Subordinate4 columns are simply wasted storage space (a precious database commodity).  Furthermore, imagine the case where a manager already has 4 subordinates &#8211; what happens if she takes on another employee?  The whole table structure would require modification.</p>
+
+<p>At this point, a second bright idea usually occurs to database novices: We don&#8217;t want to have more than one column and we want to allow for a flexible amount of data storage.  Let&#8217;s try something like this:</p>
+
+<table border="1">
+<tr>
+<th>Manager</th>
+<th>All Subordinates</th>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</table>
+
+<p>where the Subordinates field contains multiple entries in the form "Krishnamurthy, Anil, Sunita"</p>
+
+<p>This solution is closer, but it also falls short of the mark.  The subordinates column is still duplicative and non-atomic.  What happens when we need to add or remove a subordinate?  We need to read and write the entire contents of the table.  That&#8217;s not a big deal in this situation, but what if one manager had one hundred employees?  Also, it complicates the process of selecting data from the database in future queries.</p>
+
+<p>Here&#8217;s a table that satisfies the first rule of 1NF:</p>
+
+<table border="1">
+<tr>
+<th>Manager</th>
+<th>Subordinate</th>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</table>
+
+<p>In this case, there will be a separate row for each subordinate, but managers may have multiple rows.</p>
+
+<p>Now, what about the second rule: identify each row with a unique column or set of columns (the primary key)?  You might take a look at the table above and suggest the use of the subordinate column as a primary key.  In fact, the subordinate column seems a good candidate for a primary key due to the fact that our business rules specified that each subordinate may have only one manager.  However, the data that we have chosen to store in our table makes this a less than ideal solution.  What happens two employees have the same name?</p>
+
+<p>It&#8217;s best to use a truly unique identifier (such as an employee ID) as a primary key.  Our final table would look like this:</p>
+
+
+<table border="1">
+<tr>
+<th>Manager ID</th>
+<th>Subordinate ID</th>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</table>
+
+</div>
+
+<div id="procedure">
+<h2>Procedure</h2>
+Kindly refer to the common <a href="../../pub/23/">procedure</a> page for details of how to use this platform.
+
+<div id="Simulation">
+<h2>Simulation</h2>
+
+<p>Consider the following example of a database consisting of persons, their age and the places they live.</p>
+
+{{{id=1|
+#auto
+%hideall
+import re
+def make1NF(s):
+  rows = s.split("\n")
+  for i in rows:
+    i = i.strip()
+    attributes = re.split("\s+",i)
+    l = []
+    l.append(attributes[0])
+    for j in range(1,len(attributes)):
+        tokens = attributes[j].split(",")
+        if (attributes[j].find(",") > 0):
+            for k in range(len(tokens)-1):
+                l.append(l[0])
+            for k in range(len(tokens)):
+                    l[k] += " " + tokens[k]     
+        else:
+            for k in range(len(l)):
+                l[k] += " " + tokens[0]        
+    for j in l:
+        print j
+///
+}}}
+
+{{{id=2|
+s = """
+       kiran  20  Mumbai,Delhi
+       Ram    18  Hyderabad,Vizag
+       shyam  16  Hyderabad,Bangalore,Chennai
+    """
+make1NF(s)
+///
+kiran 20 Mumbai
+kiran 20 Delhi
+Ram 18 Hyderabad
+Ram 18 Vizag
+shyam 16 Hyderabad
+shyam 16 Bangalore
+shyam 16 Chennai
+}}}
+
+<p>After converting this table into First normal form, the result would appear as shown in the output above. This is accomplished using the make_1NF() function call at the end of the above code. The repetitions in the tables are removed, which is the main objective of a database in First normal form.</p>
+
+<h4>Try Now!</h4>
+
+<p>Add another multi-valued column to the phone numbers of each person. To do so, simply copy-paste the above code to the cell below. Then add some white space after the <i>places</i> column and add some phone numbers separated by commas (<b>don't</b> put any white-space between the phone numbers).</p>
+
+{{{id=3|
+
+///
+}}}
+
+</div>
+
+<div id="Quiz">
+<h2>Quiz </h2>
+
+<ol>
+<li> Consider the following relation Schema. Department (DNAME, DNUMBER, DManager, DLocations). Convert it into First Normal form. 
+<li> Convert the given Schema into 1NF. EMP_PROJ (ENO, ENAME, PNUMBER, HOURS).
+</ol>
+
+</div>
+
+
+<div id="References">
+<h2>References </h2>
+
+<ol>
+<li> <a href="http://databases.about.com/cs/specificproducts/g/1nf.htm" target="_blank">http://databases.about.com/cs/specificproducts/g/1nf.htm</a> </li>
+<li> <a href="http://en.wikipedia.org/wiki/First_normal_form" target="_blank">http://en.wikipedia.org/wiki/First_normal_form</a> </li>
+<li> Database Management systems by Elmasri and Navathe </li>
+<!--li> <a href="http://databases.about.com/od/specificproducts/a/firstnormalform.htm" target="_blank">http://databases.about.com/od/specificproducts/a/firstnormalform.htm</a></li-->
+<li> <a href="http://www.databasedev.co.uk/1norm_form.html" target="_blank">http://www.databasedev.co.uk/1norm_form.html</a></li>
+</ol>
+</div>
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/?lab=cse07">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=5|
+
+///
+}}}

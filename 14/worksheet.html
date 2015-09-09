@@ -1,0 +1,225 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<h1 id="main-title">Enhanced Entity Relationship Model</h1>
+<div id="introduction">
+<h2>Introduction</h2>
+<p>In computer science, the enhanced entity-relationship (EER) model is a high-level or conceptual data model incorporating extensions to the original entity-relationship (ER) model, used in the design of databases. It was developed by a need to reflect more precisely properties and constraints that are found in more complex databases, such as in engineering design and manufacturing (CAD/CAM), telecommunications, complex software systems and geographic information systems (GIS).</p>
+<br />
+
+</div>
+<div id="theory">
+<h2>Theory</h2>
+<p>In computer science, the enhanced entity-relationship (EER) model is a high-level or conceptual data model incorporating extensions to the original entity-relationship (ER) model, used in the design of databases.The EER model includes all of the concepts introduced by the ER model. Additionally it includes the concepts of a subclass and superclass, along with the concepts of specialization  and generalization. Furthermore, it introduces the concept of a union type or category, which is used to represent a collection of objects that is the union of objects of different entity types.</p>
+<h3>Subclass and Superclass</h3>
+<p>Entity type Y is a subtype (subclass) of an entity type X if and only if every Y is necessarily an X. A subclass entity inherits all attributes and relationships of its superclass entity. A subclass entity may have its own specific attributes and relationships (together with all the attributes and relationships it inherits from the superclass.</p>
+<p>Many situations in business lend themselves to supertype/subtype relation. For example, a business may have 3 types of employees: hourly, salaried and consultants. And each employee type is paid differently, thus requiring different data. Or, a hospital patient may be either outpatient or resident patient. Or in a manufacturing organization, an inventory item may be purchased, manufactured or both.</p>
+<p>To model an employees database using the ERD which we learned earlier, we would create three entity types; HOURLY_EMPLOYEE, SALARIED_EMPLOYEE and CONSULTANT along with their attributes: 	<br /> HOURLYE_EMPLOYEE [ name, ssn, &hellip;., hourly_rate] <br /> SALARIED_EMPLOYEE [ name, ssn, &hellip;., annual_salary] <br /> CONSULTANT [ name, ssn, &hellip;., billing_rate]</p>
+<p>The graphical Enhanced ER diagram would look like: 	<br /> <img src="eer-model.gif" alt="Enhanced ER Diagram" /></p>
+</div>
+<div id="objective">
+<h2>Objective</h2>
+<p>The basic E-R model was introduced during the mid-1970s. Since then, business environment became more complex and required enhancements to the E-R modeling. Additional features were added to accommodate complex data structure, business rules and database segmentation.  The extensions to the model is known as the Enhanced Entity-Relationship (EER) model.</p>
+</div>
+<div id="simulation">
+<h2>Simulation</h2>
+<p>Consider the following XML type schema, where each all the entities are specified in the using the keyword, "Entities", relations by "Relations", etc. We can edit the schema given below to generate an Enhanced Entity relationship model. </p>
+    <p>
+              Consider the following set of requirements for a company database
+<br>
+     The company keeps track of each employees's name, identification number and address.</p><ol><li>
+     Employee entity has attributes Name, Age and Salary.
+    </li><li> There are two possible types of Employees : 1. Consultant 2. Manager
+    </li><li> Each employee works on certain projects. A project entity has attributes Name, Projectid and Department to which it belongs to.
+    </li><li> The consultant has attributes Name and Dept.
+    </li><li>The Manager has attributes at1, at2, and at3.
+      </li></ol>
+
+Given below is the sample input for generating the EER model for this company database.
+
+</div>
+
+{{{id=1|
+Entities="""<entity name=Consultant><attributes> Name, Dept </attributes></entity> 
+ <entity name=Manager><attributes> at5, at2, at4 </attributes></entity> 
+  <entity name=Employee><attributes> Name, Age, Salary </attributes></entity> 
+   <entity name=Project><attributes> Name, pid, Dept </attributes></entity>""" 
+
+Relations="""<relation name=Works_on> Employee,Project </relation> 
+ <relation name=on> Project,Manager </relation>""" 
+
+Specialization="""<superclass name=Employee><subclass> Manager,Consultant</subclass></superclass>"""
+///
+}}}
+
+{{{id=2|
+#auto
+%hideall
+def showEER():
+    import re
+    entities=re.findall("<entity name=\w+>\s*<attributes>\s*[\w+\s+,]+\s*</attributes>\s*</entity>",Entities)
+    #entities=Entities.split("\n")
+    x=0
+    y=0
+    coord={}
+    P=""
+    cnt=0
+    
+    # Extracting Entities
+    for i in entities:
+        ##ename=i
+        ename=re.findall("=\w+>",i)[0]
+        ename=re.sub("[=>]","",ename)
+        ename=ename.strip()
+        coord[ename]=[x,y]
+        x1=x
+        y1=y
+       
+        if(cnt==0):
+            P=line([(x-2,y-2), (x+2,y-2)]) + line([(x+2,y-2), (x+2,y+2)]) + line([(x+2,y+2), (x-2,y+2)]) + line([(x-2,y+2), (x-2,y-2)]) + text(ename, (x,y), axes=false)
+            cnt=1
+        else:
+            P+=line([(x-2,y-2), (x+2,y-2)]) + line([(x+2,y-2), (x+2,y+2)]) + line([(x+2,y+2), (x-2,y+2)]) + line([(x-2,y+2), (x-2,y-2)]) + text(ename, (x,y), axes=false)
+           
+      
+        ##attributes = Entities[i]
+        attributes=i.split("<attributes>")[1];
+        attributes=attributes.split("</attributes>")[0]
+        attr=attributes.split(",")
+        lc=0;
+        for j in attr:
+            j=j.strip()
+            if(lc==0):
+                x1=x-4
+                y1=y-4
+                P+=line([(x1,y1+1),(x-2,y-2)])
+            if(lc==1):
+                x1=x+4
+                y1=y-4
+                P+=line([(x1,y1+1),(x+2,y-2)])
+            if(lc==2):
+                x1=x+4
+                y1=y+4
+                P+=line([(x1,y1-1),(x+2,y+2)])
+            if(lc==3):
+                x1=x-4
+                y1=y+4
+                P+=line([(x1,y1-1),(x-2,y+2)])
+            lc+=1   
+            P+=ellipse((x1,y1),2,1, axes=false) + text(j,(x1,y1))
+        if(x==0):
+            x=20
+        else:
+            x=0
+            y+=20
+    relations=re.findall("<relation name=\w+>\s*[\w+,]+\s*</relation>",Relations)
+    # Extracting relations
+    for i in relations:
+        ##rname = i
+        ##enames = Relations[i]
+        rname=re.findall("=\w+",i)[0]
+        rname=rname.replace("=","")
+        enames=re.findall("[\w+,]+",i)[3]
+        enames=enames.strip()
+        enames=enames.split(",")
+        x1=coord[enames[0]][0]
+        x2=coord[enames[1]][0]
+        y1=coord[enames[0]][1]
+        y2=coord[enames[1]][1]
+        xr=(x1 + x2)/2
+        yr=(y1 + y2)/2
+         
+        P+=line([(xr-2,yr),(xr,yr+2)]) + line([(xr,yr+2),(xr+2,yr)]) + line([(xr+2,yr),(xr,yr-2)]) + line([(xr,yr-2),(xr-2,yr)]) + text(rname,(xr,yr))
+        if(yr==y1):
+            if(xr>x1):
+                P+=line([(xr-2,yr),(x1+2,yr)]) + line([(xr+2,yr),(x2-2,yr)])
+            else:
+                P+=line([(xr-2,yr),(x2+2,yr)]) + line([(xr+2,yr),(x1-2,yr)])
+        else:
+            if(yr>y1):
+                P+=line([(xr,yr-2),(x1,y1+2)]) + line([(xr,yr+2),(x2,y2-2)])
+            else:
+                P+=line([(xr,yr-2),(x1,y2+2)]) + line([(xr,yr+2),(x2,y1-2)])
+    
+    # Extracting subclasses
+    
+    subclass=re.findall("<superclass name=\w+>\s*<subclass>\s*[\w+,]+\s*</subclass>\s*</superclass>",Specialization)
+    for i in subclass:
+        ##sname = i
+        ##subcl = Specialization1[i]
+        sname=re.findall("\w+",i)[2]
+        subcl=i.split("</subclass>")[0]
+        subcl=(subcl.split("<subclass>")[1]).split(",")
+        xc=coord[sname][0]
+        yc=coord[sname][1]-10
+        P+=circle((xc,yc),1) + text("d",(xc,yc), axes=false) + line([(xc,yc+1),(xc,yc+8)])
+        
+        for j in subcl:
+            j=j.strip()
+            x=coord[j][0]
+            y=coord[j][1]
+            P+=arrow((xc,yc-1),(x,y+2))
+                
+                
+    #P=line([(x,y), (5,5)]) + line([(0,0), (1,1)]) + line([(2,0), (1,1)]) + line([(2,0), (1,-1)]) + line([(0,0), (1,-1)]) + text(Name, (1,0), axes=false)+ arrow((2,0), (3,2))
+    P.show(axes=false)
+///
+}}}
+
+{{{id=3|
+showEER()
+///
+<html><font color='black'><img src='cell://sage0.png'></font></html>
+}}}
+
+</div>
+
+
+
+
+<div id="quizzes">
+	<h2>Quiz</h2> 
+	<p>
+	a) Draw an EER diagram for the following scenario. A nonprofit organization depends on a number of different type of persons for its successful operation.  The organization is is interested in the following attributes for all of these persons: SSN, name, address, city, state, Zip and telephone. Three types of persons are of greatest interest: employees, volunteers, and donors. Employees only have a Date_Hired attribute, and volunteers only have a skill attribute. Donors only have a relationship (named Donates) with an Item entity type. A donor must have donated one or more items, and an item may have no donors, or one or more donors.
+
+	There are persons other than employees, volunteers, and donors who are of  interest to the organization, so that a person need not belong to any of these three groups. On the other hand, at a given time a person may belong to two or more of these groups (for example, employees and donor).
+	</p>
+	<p>
+	 b) Repeat the above problem, but add a subtype discriminator (named Person_Type) to the EER diagram you created.
+	</p> 
+</div>
+
+<div id="readings"> 
+	<h2> Further-readings </h2> 
+	<ol>	
+		<li>
+		<a href="http://en.wikipedia.org/wiki/Entity-relationship_model">http://en.wikipedia.org/wiki/Entity-relationship_model</a>
+		</li>
+		<li>
+		<a href="http://ww2.cis.temple.edu/cis109friedman/CIS%20109%20-%20Lecture%20Set%20III%20-%20ERD%20and%20EERDs%20and%20Modeling/AAA%20Lecture%20Set%20III%20-%20Entity%20Relationship%20Diagrams%20Ver%207.htm">Enhanced ER model</a>
+		</li> 
+ 		<li>
+		“Fundamentals of Database Systems" by Elmasri and Navathe. 
+		</li> 
+ 		<li>
+		<a href="http://www.databaseanswers.org/modelling_tools.htm">
+		Data Modelling Tools
+		</a> 
+		</li>
+	</ol>
+</div>
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=4|
+
+///
+}}}

@@ -1,0 +1,143 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<!--h1 id="main-title">Third Normal Form</h1-->
+<div id="introduction">
+<h2>Introduction </h2>
+
+<p>The Third normal form (3NF) is an important form of database normalization. 3NF is said to hold if and only if both of the following conditions hold:</p>
+
+<ol>
+    <li> The relation <i>R</i> (table) is in second normal form (2NF) </li>
+    <li> Every non-prime attribute of <i>R</i> is non-transitively dependent (i.e. directly dependent) on every candidate key of <i>R</i>. </li>
+</ol>
+
+<p>A non-prime attribute of <i>R</i> is an attribute that does not belong to any candidate key of <i>R</i>. A transitive dependency is a functional dependency in which $X \longrightarrow Z$ (<i>X</i> determines <i>Z</i>) indirectly, by virtue of $X \longrightarrow Y$ and $Y \longrightarrow Z$ (where it is not the case that $Y \longrightarrow X$).</p>
+</div>
+
+<div id="theory">
+<h2>Theory</h2>
+
+<p>There are two basic requirements for a database to be in third normal form:</p>
+
+<ul>
+<li>Already meet the requirements of both 1NF and 2NF </li>
+<li>Remove columns that are not fully dependent upon the primary key. </li>
+</ul>
+
+<p>Imagine that we have a table of widget orders that contains the following attributes:</p>
+
+<ul>
+<li>Order Number</li>
+<li>Customer Number</li>
+<li>Unit Price</li>
+<li>Quantity</li>
+<li>Total</li>
+</ul>
+
+<p>Remember, our first requirement is that the table must satisfy the requirements of 1NF and 2NF.  Are there any duplicative columns?  No.  Do we have a primary key?  Yes, the order number.  Therefore, we satisfy the requirements of 1NF.  Are there any subsets of data that apply to multiple rows?  No, so we also satisfy the requirements of 2NF.</p>
+
+<p>Now, are all of the columns fully dependent upon the primary key?  The customer number varies with the order number and it doesn't appear to depend upon any of the other fields.  What about the unit price?  This field could be dependent upon the customer number in a situation where we charged each customer a set price.  However, looking at the data above, it appears we sometimes charge the same customer different prices.  Therefore, the unit price is fully dependent upon the order number.  The quantity of items also varies from order to order, so we're OK there.</p>
+
+<p>What about the total?  It looks like we might be in trouble here.  The total can be derived by multiplying the unit price by the quantity, therefore it's not fully dependent upon the primary key.  We must remove it from the table to comply with the third normal form.  Perhaps we use the following attributes:</p>
+
+<ul>
+<li>Order Number</li>
+<li>Customer Number</li>
+<li>Unit Price</li>
+<li>Quantity</li>
+</ul>
+
+<p>Now our table is in 3NF.  But, you might ask, what about the total?  This is a derived field and it's best not to store it in the database at all.  We can simply compute it "on the fly" when performing database queries.  For example, we might have previously used this query to retrieve order numbers and totals:</p>
+
+<pre><code> SELECT OrderNumber, Total
+ FROM WidgetOrders
+ </code></pre>
+
+<p>We can now use the following query:</p>
+
+<pre><code> SELECT OrderNumber, UnitPrice * Quantity AS Total
+ FROM WidgetOrders
+ </code></pre>
+
+ <p>to achieve the same results without violating normalization rules.</p>
+</div>
+
+<div id="procedure">
+<h2>Procedure</h2>
+Kindly refer to the common <a href="../../pub/23/">procedure</a> page for details of how to use this platform.
+
+<div id="Simulation">
+<h2>Simulation</h2>
+
+<p>Lets consider the following example of a database of a tournament and the details of its winner. We represent the dependencies between the attributes of this table using " &lt;Attribute1&gt; : &lt;Attribute2&gt; ", which means that Attribute1 depends on Attribute2.</p>
+
+{{{id=1|
+table = """ Tournament   Year   Winner  Date_of_Birth """
+primary_key = """ Tournament Year """
+Dependencies = [ 
+                 'Winner : Date_of_Birth'
+               ]
+///
+}}}
+
+<p>We get the following table after normalizing the table into Third Normal Form.</p>
+
+{{{id=2|
+import re
+def convertTo3NF():
+    table1 = table.strip()
+    tokens = re.split("\s+", table1)
+    for i in Dependencies:
+        rel = i.split(" : ")
+        l = []
+        l.append(rel[1].strip())
+        print rel[0],rel[1]
+        tokens = list(set(tokens) - set(l))
+    for i in tokens:
+        print i,
+convertTo3NF()
+///
+Winner Date_of_Birth
+Tournament Winner Year
+}}}
+
+</div>
+
+<div id="Quiz">
+<h2>Quiz </h2>
+
+<ol>
+<li>
+Consider the following Relation Schema. EMP_DEPT (ENAME, ENO, DOB, ADDRESS, DNO, DNAME, DMANAGER). Convert it into Third Normal Form.
+<li> Consider the following Schema. CAR_SALE (Car#, Date_Sold, Salesman#, Commission%, Discount_amt). Convert it into Third Normal Form. 
+<li> Consider the following relation for publised books. BOOK (Book_title, Authorname, Book_type, price, Author_aff, Publisher). Convert it into 3NF. 
+</ol>
+</div>
+
+<div id="References">
+<h2>References </h2>
+
+<ol>
+<li> http://c2.com/cgi/wiki?ThirdNormalForm </li>
+<li> Database Management systems by Elmasri and Navathe </li>
+<li> http://en.wikipedia.org/wiki/Third_normal_form </li>
+<li> http://databases.about.com/od/administration/l/bldef_3nf.htm </li>
+<li> http://www.blueclaw-db.com/database_3rd_normal_form.htm </li>
+</ol>
+</div>
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/?lab=cse07">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=5|
+
+///
+}}}
