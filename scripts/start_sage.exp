@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+# Creating Sage notebook
+#cd
+#cd sage
+set address [lindex $argv 0];
+spawn nohup sage -c "inotebook(interface=" "'$address'" ",port=80,accounts=true)"
+expect {
+"Enter new password: " { send "sage123\r" }
+"Retype new password: " { send "sage123\r" }
+}

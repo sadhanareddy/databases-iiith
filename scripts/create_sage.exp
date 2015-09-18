@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+# Creating Sage notebook
+#cd
+#cd sage
+#spawn nohup ./create_sagenb
+spawn screen -S "Sage_Server" sage -c 'notebook(interface="",directory="/root/.sage/sage_notebook.sagenb",port=80,accounts=true)' &
+expect {
+"Enter new password: " { send "sage123\r" }
+"Retype new password: " { send "sage123\r" }
+}

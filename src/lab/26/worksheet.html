@@ -1,0 +1,252 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<!DOCTYPE html>
+<head></head>
+<h1 id="main-title">
+Relational Model 
+</h1>
+
+<div id="introduction">
+	<h2>Introduction </h2>
+	 <p>
+	The relational model for database  management is a database model based on first-order predicate logic, first formulated and proposed in 1969 by E.F. Codd. The model uses the concept of a mathematical relation, which looks somewhat like a table of values - as its basic building block, and has its theoretical basis in set theory and first-order predicate logic. 
+	</p>
+	<p>
+	Its central idea was to describe a database as a collection of predicates over a finite set of predicate variables, describing constraints on the possible values and combinations of values. The content of the database at any given time is a finite (logical) model of the database, i.e. a set of relations, one per predicate variable, such that all predicates are satisfied. A request for information from the database (a database query) is also a predicate.
+	</p>
+	<br>
+	
+ </div>
+<div id="theory">
+	<h2>Theory</h2> 
+	<h3> The Model </h3>
+	<p>
+	The fundamental assumption of the relational model is that all data is represented as mathematical n-ary relations, an n-ary relation being a subset  of the Cartesian product of n domains. In the mathematical model, reasoning about such data is done in two-valued predicate logic, meaning there are two possible evaluations  for each proposition: either true or false (and in particular no third value such as unknown, or not applicable, either of which are often associated with the concept of NULL). Some think two-valued logic is an important part of the relational model, while others think a system that uses a form of three-valued logic can still be considered relational.
+	</p>
+	<p>	
+	Data are operated upon by means of a relational calculus or relational algebra, these being equivalent in expressive power.
+	The relational model of data permits the database designer to create a consistent, logical representation of information. Consistency is achieved by including declared constraints in the database design, which is usually referred to as the logical schema. The theory includes a process of database normalization whereby a design with certain desirable properties can be selected from a set of logically equivalent alternatives. The access plans and other implementation and operation details are handled by the DBMS engine, and are not reflected in the logical model. This contrasts with common practice for SQL DBMSs in which performance tuning often requires changes to the logical model.
+	</p>
+	<p>
+	The basic relational building block is the domain or data type, usually abbreviated nowadays to type. A tuple is an ordered set of attribute values. An attribute is an ordered pair of attribute name and type name. An attribute value is a specific valid value for the type of the attribute. This can be either a scalar value or a more complex type.
+
+	A relation consists of a heading and a body. A heading is a set of attributes. A body (of an n-ary relation) is a set of n-tuples. The heading of the relation is also the heading of each of its tuples.
+	</p>
+	<p>
+	A relation is defined as a set of n-tuples. In both mathematics and the relational database model, a set is an unordered collection of unique, non-duplicated items, although some DBMSs impose an order to their data. In mathematics, a tuple has an order, and allows for duplication. E.F. Codd originally defined tuples using this mathematical definition.[6] Later, it was one of E.F. Codd's great insights that using attribute names instead of an ordering would be so much more convenient (in general) in a computer language based on relations[citation needed]. This insight is still being used today. Though the concept has changed, the name "tuple" has not. An immediate and important consequence of this distinguishing feature is that in the relational model the Cartesian product becomes commutative.
+	</p>
+	A table is an accepted visual representation of a relation; a tuple is similar to the concept of row, but note that in the database language SQL the columns and the rows of a table are ordered.[citation needed]
+	A relvar is a named variable of some specific relation type, to which at all times some relation of that type is assigned, though the relation may contain zero tuples.
+	The basic principle of the relational model is the Information Principle: all information is represented by data values in relations. In accordance with this Principle, a relational database is a set of relvars and the result of every query is presented as a relation.
+	</p>
+	<h3> Application to the databases </h3>
+	<p>
+	A <b>type </b>as used in a typical relational database might be the set of integers, the set of character strings, the set of dates, or the two boolean values true and false, and so on. The corresponding type names for these types might be the strings "int", "char", "date", "boolean", etc. It is important to understand, though, that relational theory does not dictate what types are to be supported; indeed, nowadays provisions are expected to be available for user-defined types in addition to the built-in ones provided by the system.
+	</p>
+	<p>
+	<b>Attribute</b> is the term used in the theory for what is commonly referred to as a column. Similarly, table is commonly used in place of the theoretical term relation (though in SQL the term is by no means synonymous with relation). A table data structure is specified as a list of column definitions, each of which specifies a unique column name and the type of the values that are permitted for that column. An attribute value is the entry in a specific column and row, such as "John Doe" or "35".
+	</p>
+	<p>
+	A <b> tuple  </b>is basically the same thing as a row, except in an SQL DBMS, where the column values in a row are ordered. (Tuples are not ordered; instead, each attribute value is identified solely by the attribute name and never by its ordinal position within the tuple.) An attribute name might be "name" or "age".
+	</p>
+	<p>
+	A <b>relation </b>is a table structure definition (a set of column definitions) along with the data appearing in that structure. The structure definition is the heading and the data appearing in it is the body, a set of rows. A database relvar (relation variable) is commonly known as a base table. The heading of its assigned value at any time is as specified in the table declaration and its body is that most recently assigned to it by invoking some update operator (typically, INSERT, UPDATE, or DELETE). The heading and body of the table resulting from evaluation of some query are determined by the definitions of the operators used in the expression of that query.
+	</p>
+</div>
+
+<div id="objective">
+	<h2> Objective </h2> 
+	<p>
+	The relational model represents the database as a collection of relations. The purpose of the relational model is to provide a declarative  method for specifying data and queries: we directly state what information the database contains and what information we want from it, and let the database management system software take care of describing data structures for storing the data and retrieval procedures for getting queries answered.
+	</p> 
+</div>
+
+<div id="simulation">
+	<h2>Practice</h2>
+ <br>
+      <p>
+      Design a relational model for a company database. The company consists of Employees. 
+    <br>Each employee has name, id, date of birth, address, sex, salary.
+    <br> Each employee works for a department. 
+     <br>Each department has a department number, department name, manager id. 
+     <br>A Department can have various locations each indicated by an id. 
+     <br>Each employee can work on many projects. 
+      <br>Each project has project name, project number, project location and the department to which this project is assigned. Each employee works on a project for certain number of hours.   
+      </p>
+         <a href="solution.JPG">Solution</a>
+
+</div>
+
+<div id="simulation">
+	<h2>Simulation</h2>
+ <br>
+
+{{{id=1|
+Entities={
+  'Employee':['Name','Age','Salary',[0,1]],
+  'Project' :['Name','pid','DeptId',[1]],
+  'Deptart': ['at5','at2','at3',[0]]
+}
+
+Relations={
+  'Works on':['Employee','Project'],
+  'on':['Project','Deptart']
+}
+///
+}}}
+
+{{{id=4|
+%auto
+#%hideall
+def showRel():
+    
+    for i in Entities:
+        pk=""
+        print """<html><b>Table Name:</b></html>""" + i
+        print """<html><b>Attributes:</b></html>""",
+        for j in range(len(Entities[i])-1):
+            print Entities[i][j],
+
+        print
+        print """<html><b>Primary Key:</b></html>""", 
+        for k in Entities[i][-1]:
+            pk+=Entities[i][k]+" "
+        print pk    
+        print "\n\n"
+///
+}}}
+
+{{{id=3|
+showRel()
+///
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "_sage_input_4.py", line 10, in <module>
+    exec compile(u'open("___code___.py","w").write("# -*- coding: utf-8 -*-\\n" + _support_.preparse_worksheet_cell(base64.b64decode("c2hvd1JlbCgp"),globals())+"\\n"); execfile(os.path.abspath("___code___.py"))' + '\n', '', 'single')
+  File "", line 1, in <module>
+    
+  File "/tmp/tmpVBjZ94/___code___.py", line 2, in <module>
+    exec compile(u'showRel()' + '\n', '', 'single')
+  File "", line 1, in <module>
+    
+  File "/tmp/tmpuWcP8F/___code___.py", line 5, in showRel
+    for i in Entities:
+NameError: global name 'Entities' is not defined
+}}}
+
+</div>
+
+
+<div id="quizzes">
+	<h2>Quiz</h2> 
+	<p>
+	Consider the following set of requirements for university database
+	<ul>
+	<li> The university keeps track of each student's name, student number, current address, phone, sex, section, course, department. Student number should have a unique value for each student </li>
+	<li> Each department is described by a name, department code, office number, office phone and college. Both name and code have unique value</li>
+	<li> Each course has a course name, description, course number, number of semester hours, level and offering departments. The value of course number is unique for each course.  </li>
+	<li> Each section has an instructor, semester, year, course and section number. The section number distinguishes sections of the same course that are thought during the same semester/year; Its values are 1,2,3.. up to the numer of sections taught during each semester.</li>
+	</ul>
+	Design an Relational Model for this application and draw an ER diagram for that schema. Specify key attributes of each entity type and stuctural constraints on each relationship type. Note any unspecified requirements and make appropriate assumptions to make the specifications complete.
+	</li>
+	</ul>
+	</p> 
+</div>
+
+<div id="readings"> 
+	<h2> Further-readings </h2> 
+	<ol>	
+ 		<li>
+		“Fundamentals of Database Systems" by Elmasri and Navathe. 
+		</li> 
+		<li>
+		<a href="http://en.wikipedia.org/wiki/Relational_model">http://en.wikipedia.org/wiki/Relational_model</a>
+		</li>
+		<li>
+		<a href="http://www.cs.sfu.ca/CC/354/zaiane/material/notes/Chapter3/node1.html">http://www.cs.sfu.ca/CC/354/zaiane/material/notes/Chapter3/node1.html</a>
+		</li> 
+ 		<li>
+		<a href="http://www.databaseanswers.org/modelling_tools.htm">
+		Data Modelling Tools
+		</a> 
+		</li>
+	</ol>
+</div>
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=5|
+Entities={
+  'student':['Name','roll_no','cur_addr','phone','sex','section','department','course',[1]],
+'department' : ['Name','dep_code','office-phone','college',[0,1]],
+'course' :['Name','desc','course_no','no_sem','hours','level','offr_dept',[2]],
+'section': ['instructor','semester','year','course','sec_no',[4]]
+}
+Relations={
+  'Register':['student','department'],
+  'Takes':['student','subject'],
+  'course_offr' :['department','course'],
+}
+///
+}}}
+
+{{{id=6|
+%auto
+#%hideall
+def showRel():
+    
+    for i in Entities:
+        pk=""
+        print """<html><b>Table Name:</b></html>""" + i
+        print """<html><b>Attributes:</b></html>""",
+        for j in range(len(Entities[i])-1):
+            print Entities[i][j],
+
+        print
+        print """<html><b>Primary Key:</b></html>""", 
+        for k in Entities[i][-1]:
+            pk+=Entities[i][k]+" "
+        print pk    
+        print "\n\n"
+///
+}}}
+
+{{{id=7|
+showRel()
+///
+<html><b>Table Name:</b></html>department
+<html><b>Attributes:</b></html> Name dep_code office-phone college
+<html><b>Primary Key:</b></html> Name dep_code 
+
+
+
+<html><b>Table Name:</b></html>course
+<html><b>Attributes:</b></html> Name desc course_no no_sem hours level offr_dept
+<html><b>Primary Key:</b></html> course_no 
+
+
+
+<html><b>Table Name:</b></html>section
+<html><b>Attributes:</b></html> instructor semester year course sec_no
+<html><b>Primary Key:</b></html> sec_no 
+
+
+
+<html><b>Table Name:</b></html>student
+<html><b>Attributes:</b></html> Name roll_no cur_addr phone sex section department course
+<html><b>Primary Key:</b></html> roll_no 
+}}}
+
+{{{id=8|
+
+///
+}}}

@@ -1,0 +1,6 @@
+#!/bin/bash
+# Creating Sage notebook
+#cd
+#cd sage
+address=127.0.0.1
+screen -S "Sage_Server" sage -c "notebook(interface=" "'$address'" ",port=8080,accounts=true)"

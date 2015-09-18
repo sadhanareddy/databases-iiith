@@ -1,0 +1,7 @@
+#!/bin/bash
+# Creating Sage notebook
+#cd
+#cd sage
+
+address=$(hostname --ip-address)
+sage -c "inotebook(interface=" "'$address'" ",port=80,accounts=true)"

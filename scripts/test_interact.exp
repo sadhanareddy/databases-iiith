@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+spawn ssh yogesh@10.2.57.61
+expect "password:"
+send "iiit123\r"
+#expect "yogesh@vlead-yogesh"
+#interact 

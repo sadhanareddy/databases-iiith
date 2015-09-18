@@ -1,0 +1,418 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<!--h1 id="main-title">SQL-II: Managing Records</h1-->
+<div id="introduction">
+<h2>Introduction </h2>
+
+<p>SQL, referred to as Structured Query Language, is a database computer language designed for managing data in relational database management systems (RDBMS). Its scope includes efficient data insert, query, update and delete, schema creation and modification, and data access control. In this chapter, we discuss SQL operations for populating the tables like inserting into a table, deleting values from a table, and updating the content of the tables.</p>
+ </div>
+
+<div id="theory">
+<h2>Theory</h2> 
+
+<p>In this section, we describe the methods to insert, update and delete elements from tables in an SQL database. Detailed examples on the usage of these commands is given in the simulation section below.</p>
+
+<ol>
+<li>An insert into a SQL table is made using an <b>insert into &lt;tablename&gt;</b> command.</li>
+<li>Updating a table can be done using the <b>update &lt;tablename&gt; set</b> command.</li>
+<li>Deleting a row from a table can be done using the <b>delete * from &lt;tablename&gt;</b> command.</li>
+</ol>
+
+<h3>INSERT INTO</h2>
+
+<p>The INSERT INTO statement is used to insert a new row in a table. It is possible to write the INSERT INTO statement in two forms.</p>
+
+<p>The first form doesn't specify the column names where the data will be inserted, only their values:</p>
+
+<table class="code notranslate" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr><td>INSERT INTO table_name<br />
+VALUES (value1, value2, value3,...)</td></tr></table>
+
+<p>The second form specifies both the column names and the values to be inserted:</p>
+
+<table class="code notranslate" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr><td>INSERT INTO table_name (column1, column2, column3,...)<br />
+
+VALUES (value1, value2, value3,...)</td></tr></table>
+<br /> 
+<hr />
+
+<h3>UPDATE</h3>
+
+<p>The UPDATE statement is used to update existing records in a table.</p>
+
+<table class="code notranslate" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr><td>UPDATE table_name<br />
+SET column1=value, column2=value2,...<br />
+WHERE some_column=some_value</td></tr></table>
+
+<p><b>Note:</b> Notice the WHERE clause in the UPDATE syntax. The WHERE clause 
+specifies which record or records that should be updated. If you omit the WHERE clause, all records will be updated!</p>
+<hr />
+
+<h3>DELETE</h3>
+
+<p>The DELETE statement is used to delete rows in a table.</p>
+
+<table class="code notranslate" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr><td>DELETE FROM table_name<br />
+WHERE some_column=some_value</td></tr></table>
+
+<p><b>Note:</b> Notice the WHERE clause in the DELETE syntax. The WHERE clause specifies which record or records that should be deleted.
+If you omit the WHERE clause, all records will be deleted!</p>
+<hr />
+</div>
+
+<div id="procedure">
+<h2>Procedure</h2>
+Kindly refer to the common <a href="../../pub/23/">procedure</a> page for details of how to use this platform.
+
+<div id="simulation">
+<h2>Simulation</h2> 
+
+<p>In the previous lab session, we saw how to create a database of a university, how to create various tables, update the schema of tables, delete tables and about primary key and foreign keys. Now, we get deeper into the database and know about how we can populate the database, how we can delete rows from the database and how we can update the content of the tables.</p>
+
+{{{id=1|
+#auto
+%hideall
+import sqlite3
+conn = sqlite3.connect(':memory:')
+curs = conn.cursor()
+def sql(c): curs.execute(c)
+///
+}}}
+
+<p>We re-create the Students table and alter it to contain a new column <i>year</i>.</p>
+
+{{{id=2|
+sql('DROP TABLE IF EXISTS Students')
+sql('CREATE TABLE Students(RollNo integer NOT NULL, Name char(30), BDay date)')
+sql('ALTER TABLE Students ADD COLUMN year integer')
+///
+}}}
+
+<h3> Inserting values into tables </h3>
+
+<p>For inserting values into the table that we created above, we use the sql 'INSERT' command, whose syntax is shown below. We have to use the query "INSERT INTO table_name (attribute1,attribute2,...) VALUES (value1,value2,...)", where table_name in the above example is Students and the attributes are RollNo, Name and year. If we do not have the NOT NULL condition on a particular attribute, we can skip that attribute during the insert. In the example below, we are inserting values "20034" for the RollNo and "Ram" for Name. Note that BDay is skipped because it is not the key attribute.</p>
+
+{{{id=3|
+sql('INSERT into Students (RollNo, Name, year) VALUES (20034,"Ram",5)')
+///
+}}}
+
+<p>Lets insert one more record into the table, note that here we are inserting the third attribute, date of birth(BDay) too. Here we are inserting the value of BDay as type "date", the format of which should be, #yearmonthdate#, that is, year followed by month followed by date.</p>
+
+{{{id=4|
+sql('INSERT INTO Students (RollNo, Name, BDay, year) VALUES (20035,"Krishna",19830323,5)')
+///
+}}}
+
+<hr />
+
+<h3> Updating rows in tables </h3>
+
+<p>The UPDATE statement is used to update existing records in a table. The syntax for an update statement is as follows: "UPDATE table_name SET column1=value, column2=value2,... WHERE some_column=some_value". The example below shows an update where we change the value of year of a student named "Krishna".</p>
+
+{{{id=5|
+sql('UPDATE Students SET year=4 WHERE Name="Krishna"')
+///
+}}}
+
+<h4>Try Now!</h4>
+
+<p>Now, insert another row with rollno=20036, your name and birthday and year=4.</p>
+
+{{{id=16|
+
+///
+}}}
+
+<p>Next, update the row you just added to set year=5.</p>
+
+{{{id=17|
+
+///
+}}}
+
+<hr />
+
+<h3> Deleting rows in tables </h3>
+
+<p>The DELETE statement is used to delete rows in a table. The syntax for a delete statement is as follows: "DELETE FROM table_name WHERE some_column=some_value". Notice the WHERE clause in the DELETE syntax. The WHERE clause specifies which record or records that should be deleted. If you omit the WHERE clause, all records will be deleted.</p>
+
+{{{id=6|
+sql('DELETE FROM Students WHERE Name="Ram"')
+///
+}}}
+
+<h4>Try Now!</h4>
+
+<p>Now, delete the row with your name.</p>
+
+{{{id=18|
+
+///
+}}}
+
+</div>
+
+<div id="quiz">
+<h2> Quiz </h2>
+
+<p>Consider the following database of a university.</p>
+
+<table class="Student" cellspacing="0" cellpadding="0" border="1">
+  <tr>
+    <th width="15%" align="left">Name</th>
+    <th width="20%" align="left">Student Number</th>
+    <th width="20%" align="left">Class</th>
+    <th width="20%" align="left">Major</th>
+  </tr>
+  <tr>
+    <td>Uday</td>
+    <td>17</td>
+    <td>1</td>
+    <td>cs</td>
+  </tr>
+
+<tr>
+    <td>Nitin</td>
+    <td>8</td>
+    <td>2</td>
+    <td>cs</td>
+  </tr>
+  </table>
+
+<br>
+
+<table class="Courses" cellspacing="0" cellpadding="0" border="1">
+  <tr>
+    <th width="15%" align="left">Course Name</th>
+    <th width="20%" align="left">Course Number</th>
+    <th width="20%" align="left">Hours</th>
+    <th width="20%" align="left">Department</th>
+  </tr>
+  <tr>
+    <td>Intro to Computer Science</td>
+    <td> CS1310</td>
+    <td>4</td>
+    <td>cs</td>
+  </tr>
+
+<tr>
+    <td>Data Structures</td>
+    <td>CS3320</td>
+    <td>4</td>
+    <td>cs</td>
+  </tr>
+
+<tr>
+    <td>Discrete Maths</td>
+    <td>MATH2410</td>
+    <td>3</td>
+    <td>MATH</td>
+  </tr>
+
+<tr>
+    <td>Database</td>
+    <td>CS3380</td>
+    <td>3</td>
+    <td>cs</td>
+  </tr>
+  </table>
+<br> 
+<table class="Section" cellspacing="0" cellpadding="0" border="1">
+  <tr>
+    <th width="15%" align="left">Section Identifier</th>
+    <th width="20%" align="left">Course Number</th>
+    <th width="20%" align="left">Semester</th>
+    <th width="20%" align="left">Year</th>
+    <th width="20%" align="left">Instructor</th>  
+   </tr>
+  <tr>
+    <td>85</td>
+    <td>MATH2410</td>
+    <td>First</td>
+    <td>98</td>
+    <td>Jain</td>
+  </tr>
+
+<tr>
+    <td>92</td>
+    <td>CS1310</td>
+    <td>First</td>
+    <td>98</td>
+    <td>Rao</td>
+  </tr>
+
+<tr>
+    <td>102</td>
+    <td>CS3320</td>
+    <td>Second</td>
+    <td>92</td>
+    <td>Ramesh</td>
+  </tr>
+
+<tr>
+    <td>112</td>
+    <td>MATH2410</td>
+    <td>First</td>
+    <td>99</td>
+    <td>Ravendar</td>
+  </tr>
+<tr>
+    <td>119</td>
+    <td>CS1310</td>
+    <td>First</td>
+    <td>99</td>
+    <td>Rao</td>
+  </tr>
+<tr>
+    <td>135</td>
+    <td>CS3380</td>
+    <td>First</td>
+    <td>99</td>
+    <td>Srinivas</td>
+  </tr>
+  </table>
+  <br>
+<table class="Grade_Report" cellspacing="0" cellpadding="0" border="1">
+  <tr>
+    <th width="15%" align="left">Student Number</th>
+    <th width="20%" align="left">Section Identifier</th>
+    <th width="20%" align="left">Grade</th>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>112</td>
+    <td>B</td>
+    
+  </tr>
+
+<tr>
+    <td>17</td>
+    <td>119</td>
+    <td>C</td>
+    
+  </tr>
+<tr>
+    <td>8</td>
+    <td>85</td>
+    <td>A</td>
+  </tr>
+<tr>
+    <td>8</td>
+    <td>92</td>
+    <td>A</td>
+  </tr>
+<tr>
+    <td>8</td>
+    <td>102</td>
+    <td>B</td>
+    
+  </tr>
+<tr>
+    <td>8</td>
+    <td>135</td>
+    <td>A</td>
+  </tr>
+  </table>
+<br>
+<table class="Prerequisite" cellspacing="0" cellpadding="0" border="1">
+  <tr>
+    <th width="15%" align="left">Course Number</th>
+    <th width="20%" align="left">Prerequisite Number</th>
+  </tr>
+  <tr>
+    <td> CS3380</td>
+    <td>CS3320</td>
+  </tr>
+
+<tr>
+    <td>CS3380</td>
+    <td>MATH2410</td>
+  </tr>
+
+<tr>
+    <td>CS3320</td>
+    <td>CS1310</td>
+  </tr>
+  </table>
+
+   <br>
+
+<p>Based on the above schema, write the SQL queries for the following questions.</p>
+
+<ul>
+<li> Create the above tables (without entering data).</li>
+
+{{{id=9|
+
+///
+}}}
+
+<li> Enter sufficient data from above into each table, for practice.</li>
+
+{{{id=10|
+
+///
+}}}
+
+<li> Insert a new Student &lt;John,25,1,MATH&gt; in the database.
+
+{{{id=11|
+
+///
+}}}
+
+<li> Change the class of Student Uday to 2.
+
+{{{id=12|
+
+///
+}}}
+
+<li> Insert a new course &lt;Knowledge Engineering, CS4390, 3, cs&gt;
+
+{{{id=13|
+
+///
+}}}
+
+<li> Delete the record for the student whose name is Uday and Student Number is 17
+
+{{{id=14|
+
+///
+}}}
+
+</ul>      
+</div>
+
+<div id="references">
+<h2> References </h2>
+
+<ol>
+<li> http://www.w3schools.com/sql/ </li>
+<li> Database management concepts by Elmasri, Navathe </li>
+<li> SQL for dummies, Orielly press</li>
+</ol>
+</p>
+</div>
+
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/?lab=cse07">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=15|
+
+///
+}}}

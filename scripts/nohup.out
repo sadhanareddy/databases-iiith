@@ -1,0 +1,94 @@
+/usr/lib/sagemath/local/lib/python2.7/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+2015-09-03 16:36:48+0530 [-] Log opened.
+2015-09-03 16:36:48+0530 [-] twistd 13.2.0 (/usr/lib/sagemath/local/bin/python 2.7.5) starting up.
+2015-09-03 16:36:48+0530 [-] reactor class: twisted.internet.epollreactor.EPollReactor.
+2015-09-03 16:36:48+0530 [-] QuietSite starting on 81
+2015-09-03 16:36:48+0530 [-] Starting factory <__builtin__.QuietSite instance at 0x6bad050>
+http://localhost:81/?startup_token=d9f4bc607cdb63f4cb7f26abfa54b9cf: No such file or directory
+**********************************************************************
+WARNING: Running the notebook insecurely not on localhost is dangerous
+because its possible for people to sniff passwords and gain access to
+your account. Make sure you know what you are doing.
+**********************************************************************
+/usr/lib/sagemath/local/lib/python/getpass.py:83: GetPassWarning: Can not control echo on the terminal.
+  passwd = fallback_getpass(prompt, stream)
+Traceback (most recent call last):
+Warning: Password input may be echoed.  File "/usr/lib/sagemath/src/bin/sage-eval", line 13, in <module>
+
+Enter new password:     eval(compile(s,'<cmdline>','exec'))
+  File "<cmdline>", line 1, in <module>
+**********************************************************************
+WARNING: Running the notebook insecurely not on localhost is dangerous
+because its possible for people to sniff passwords and gain access to
+your account. Make sure you know what you are doing.
+**********************************************************************
+The notebook files are stored in: sage_notebook.sagenb
+
+
+
+Please choose a new password for the Sage Notebook 'admin' user.
+Do _not_ choose a stupid password, since anybody who could guess your password
+and connect to your machine could access or delete your files.
+NOTE: Only the hash of the password you type is stored by Sage.
+You can change your password by typing notebook(reset=True).
+
+
+
+Traceback (most recent call last):
+  File "/usr/lib/sagemath/src/bin/sage-eval", line 13, in <module>
+    eval(compile(s,'<cmdline>','exec'))
+  File "<cmdline>", line 1, in <module>
+  File "lazy_import.pyx", line 344, in sage.misc.lazy_import.LazyImport.__call__ (sage/misc/lazy_import.c:2550)
+  File "lazy_import.pyx", line 344, in sage.misc.lazy_import.LazyImport.__call__ (sage/misc/lazy_import.c:2550)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook_object.py", line 241, in inotebook
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook_object.py", line 241, in inotebook
+    notebook(*args, **kwds)
+    notebook(*args, **kwds)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook_object.py", line 228, in __call__
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook_object.py", line 228, in __call__
+    return self.notebook(*args, **kwds)
+    return self.notebook(*args, **kwds)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/run_notebook.py", line 563, in notebook_run
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/run_notebook.py", line 529, in notebook_run
+        passwd = get_admin_passwd()
+nb = notebook.load_notebook(directory)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/run_notebook.py", line 643, in get_admin_passwd
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook.py", line 1811, in load_notebook
+    passwd = getpass.getpass("Enter new password: ")
+  File "/usr/lib/sagemath/local/lib/python/getpass.py", line 83, in unix_getpass
+    passwd = fallback_getpass(prompt, stream)
+  File "/usr/lib/sagemath/local/lib/python/getpass.py", line 118, in fallback_getpass
+    return _raw_input(prompt, stream)
+  File "/usr/lib/sagemath/local/lib/python/getpass.py", line 133, in _raw_input
+    line = input.readline()
+IOError: [Errno 9] Bad file descriptor
+    nb = Notebook(dir)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/notebook/notebook.py", line 159, in __init__
+    for id_number in os.listdir(self.__storage._abspath(self.__storage._user_path("pub"))):
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/storage/filesystem_storage.py", line 116, in _user_path
+    new_path = self._deep_user_path(username)
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/storage/filesystem_storage.py", line 99, in _deep_user_path
+    self._makepath(self._abspath(os.path.join(self._home_path, path)))
+  File "/usr/lib/sagemath/local/lib/python2.7/site-packages/sagenb-0.10.8.2-py2.7.egg/sagenb/storage/filesystem_storage.py", line 91, in _makepath
+    if not os.path.exists(p): os.makedirs(p)
+  File "/usr/lib/sagemath/local/lib/python/os.py", line 157, in makedirs
+    mkdir(name, mode)
+OSError: [Errno 17] File exists: '/root/.sage/sage_notebook.sagenb/home/__store__/3/3a/3a2/3a21'
+Must be connected to a terminal.
+Must be connected to a terminal.
+Traceback (most recent call last):
+  File "/usr/lib/sagemath/src/bin/sage-eval", line 13, in <module>
+    eval(compile(s,'<cmdline>','exec'))
+  File "<cmdline>", line 1
+    'notebook(interface="",directory="/root/.sage/sage_notebook.sagenb",port=80,accounts=true)' &
+                                                                                                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "/usr/lib/sagemath/src/bin/sage-eval", line 13, in <module>
+    eval(compile(s,'<cmdline>','exec'))
+  File "<cmdline>", line 1
+    'notebook(interface="",directory="/root/.sage/sage_notebook.sagenb",port=80,accounts=true)' &
+                                                                                                ^
+SyntaxError: invalid syntax
+Must be connected to a terminal.

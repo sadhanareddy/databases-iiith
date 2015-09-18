@@ -1,0 +1,7 @@
+#!/usr/bin/expect -f
+# Creating Sage notebook
+#cd
+#cd sage
+#spawn sage -c 'notebook(interface="",directory="/root/.sage/sage_notebook.sagenb",port=80,accounts=true)'
+spawn screen bash
+send "sage -c 'notebook(interface=\"\",directory=\"/root/.sage/sage_notebook.sagenb\",port=80,accounts=true)' &"

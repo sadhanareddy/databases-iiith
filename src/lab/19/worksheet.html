@@ -1,0 +1,461 @@
+
+
+<center>
+<img src="http://virtual-labs.ac.in/images/virtualLabsLogo.jpg" width="1220" alt="logo"/> 
+</center>
+
+<!DOCTYPE html>
+<!--<head></head>-->
+<h1 id="main-title">
+Boyce-Codd Normal Form
+</h1>
+</head>
+<div id="introduction">
+	<h2>Introduction </h2>
+	 <p>
+A relation R is in Boyce-Codd normal form (BCNF) if and only if every determinant is a candidate key. 
+
+The definition of BCNF addresses certain (rather unlikely) situations which 3NF does not handle. The characteristics of a relation which distinguish 3NF from BCNF are given below. Since it is so unlikely that a relation would have these characteristics, in practical real-life design it is usually the case that relations in 3NF are also in BCNF. Since relations in 3NF but not in BCNF are slightly unusual, it is a bit more difficult to come up with meaningful examples. To be precise, the definition of 3NF does not deal with a relation that:
+
+<ol>
+<li> has multiple candidate keys, where </li>
+   
+<li> those candidate keys are composite, and </li>
+
+<li> the candidate keys overlap (i.e., have at least one common attribute) </li>
+</ol>
+
+</p>
+</div>
+
+<div id="theory">
+	<h2>Theory/Procedure </h2>
+
+<h2>3NF tables not meeting BCNF</h2>
+<p>Only in rare cases does a 3NF table not meet the requirements of BCNF. A 3NF table which does not have multiple overlapping candidate keys is guaranteed to be in BCNF. Depending on what its functional dependencies are, a 3NF table with two or more overlapping candidate keys may or may not be in BCNF</p>
+
+<p>An example of a 3NF table that does not meet BCNF is:</p>
+<table class="wikitable" border="1">
+<caption>Today's Court Bookings</caption>
+<tr>
+<th>Court</th>
+<th>Start Time</th>
+<th>End Time</th>
+<th>Rate Type</th>
+</tr>
+<tr>
+<td>1</td>
+
+<td>09:30</td>
+<td>10:30</td>
+<td>SAVER</td>
+</tr>
+<tr>
+<td>1</td>
+<td>11:00</td>
+<td>12:00</td>
+<td>SAVER</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>14:00</td>
+<td>15:30</td>
+<td>STANDARD</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10:00</td>
+<td>11:30</td>
+
+<td>PREMIUM-B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>11:30</td>
+<td>13:30</td>
+<td>PREMIUM-B</td>
+</tr>
+<tr>
+<td>2</td>
+<td>15:00</td>
+
+<td>16:30</td>
+<td>PREMIUM-A</td>
+</tr>
+</table>
+<ul>
+<li>Each row in the table represents a court booking at a tennis club that has one hard court (Court 1) and one grass court (Court 2)</li>
+<li>A booking is defined by its Court and the period for which the Court is reserved</li>
+<li>Additionally, each booking has a Rate Type associated with it. There are four distinct rate types:</li>
+</ul>
+<dl>
+<dd>
+<ul>
+
+<li>SAVER, for Court 1 bookings made by members</li>
+<li>STANDARD, for Court 1 bookings made by non-members</li>
+<li>PREMIUM-A, for Court 2 bookings made by members</li>
+<li>PREMIUM-B, for Court 2 bookings made by non-members</li>
+</ul>
+</dd>
+</dl>
+<p>The table's superkeys are:</p>
+<ul>
+<li>S<sub>1</sub> = {Court, Start Time}</li>
+
+<li>S<sub>2</sub> = {Court, End Time}</li>
+<li>S<sub>3</sub> = {Rate Type, Start Time}</li>
+<li>S<sub>4</sub> = {Rate Type, End Time}</li>
+<li>S<sub>5</sub> = {Court, Start Time, End Time}</li>
+
+<li>S<sub>6</sub> = {Rate Type, Start Time, End Time}</li>
+<li>S<sub>7</sub> = {Court, Rate Type, Start Time}</li>
+<li>S<sub>8</sub> = {Court, Rate Type, End Time}</li>
+<li>S<sub>T</sub> = {Court, Rate Type, Start Time, End Time}, the trivial superkey</li>
+
+</ul>
+<p>Note that even though in the above table <i>Start Time</i> and <i>End Time</i> attributes have no duplicate values for each of them, we still have to admit that in some other days two different bookings on court 1 and court 2 could <i>start at the same time</i> or <i>end at the same time</i>. This is the reason why {Start Time} and {End Time} cannot be considered as the table's superkeys.</p>
+<p>However, only S<sub>1</sub> to S<sub>4</sub> are candidate keys (that is, minimal superkeys for that relation) because e.g. S<sub>1</sub> ⊂ S<sub>5</sub>, so S<sub>5</sub> cannot be a candidate key.</p>
+
+<p>Recall that 2NF prohibits partial functional dependencies of non-prime attributes (ie an attribute that does not occur in ANY candidate key) on candidate keys, and that 3NF prohibits transitive functional dependencies of non-prime attributes on candidate keys.</p>
+<p>In <b>Today's Court Bookings</b> table, there are no non-prime attributes: that is, all attributes belong to some candidate key. Therefore the table adheres to both 2NF and 3NF.</p>
+<p>The table does not adhere to BCNF. This is because of the dependency Rate Type → Court, in which the determining attribute (Rate Type) is neither a candidate key nor a superset of a candidate key.</p>
+
+<p>Dependency Rate Type → Court is respected as a Rate Type should only ever apply to a single Court.</p>
+<p>The design can be amended so that it meets BCNF:</p>
+<table class="wikitable" style="float:left;" border="1">
+<caption>Rate Types</caption>
+<tr>
+<th>Rate Type</th>
+<th>Court</th>
+<th>Member Flag</th>
+</tr>
+<tr>
+<td>SAVER</td>
+
+<td>1</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>STANDARD</td>
+<td>1</td>
+<td>No</td>
+</tr>
+<tr>
+<td>PREMIUM-A</td>
+<td>2</td>
+
+<td>Yes</td>
+</tr>
+<tr>
+<td>PREMIUM-B</td>
+<td>2</td>
+<td>No</td>
+</tr>
+</table>
+
+
+<table class="wikitable" style="float:left;" border="1">
+<caption>Today's Bookings</caption>
+<tr>
+<th>Rate Type</th>
+
+<th>Start Time</th>
+<th>End Time</th>
+</tr>
+<tr>
+<td>SAVER</td>
+<td>09:30</td>
+<td>10:30</td>
+</tr>
+<tr>
+<td>SAVER</td>
+<td>11:00</td>
+
+<td>12:00</td>
+</tr>
+<tr>
+<td>STANDARD</td>
+<td>14:00</td>
+<td>15:30</td>
+</tr>
+<tr>
+<td>PREMIUM-B</td>
+<td>10:00</td>
+<td>11:30</td>
+
+</tr>
+<tr>
+<td>PREMIUM-B</td>
+<td>11:30</td>
+<td>13:30</td>
+</tr>
+<tr>
+<td>PREMIUM-A</td>
+<td>15:00</td>
+<td>16:30</td>
+</tr>
+
+</table>
+<p><br style="clear:both;" />
+Example: The candidate keys for the Rate Types table are {Rate Type} and {Court, Member Flag}; the candidate keys for the Today's Bookings table are {Rate Type, Start Time} and {Rate Type, End Time}. Both tables are in BCNF. Having one Rate Type associated with two different Courts is now impossible, so the anomaly affecting the original table has been eliminated.</p>
+<h2>Achievability of BCNF</h2>
+<p>In some cases, a non-BCNF table cannot be decomposed into tables that satisfy BCNF and preserve the dependencies that held in the original table. Beeri and Bernstein showed in 1979 that, for example, a set of functional dependencies {AB → C, C → B} cannot be represented by a BCNF schema. Thus, unlike the first three normal forms, BCNF is not always achievable.</p>
+
+<p>Consider the following non-BCNF table whose functional dependencies follow the {AB → C, C → B} pattern:</p>
+<table class="wikitable" border="1">
+<caption>Nearest Shops</caption>
+<tr>
+<th>Person</th>
+<th>Shop Type</th>
+<th>Nearest Shop</th>
+</tr>
+<tr>
+<td>Davidson</td>
+<td>Optician</td>
+
+<td>Eagle Eye</td>
+</tr>
+<tr>
+<td>Davidson</td>
+<td>Hairdresser</td>
+<td>Snippets</td>
+</tr>
+<tr>
+<td>Wright</td>
+<td>Bookshop</td>
+<td>Merlin Books</td>
+
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Bakery</td>
+<td>Doughy's</td>
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Hairdresser</td>
+<td>Sweeney Todd's</td>
+</tr>
+
+<tr>
+<td>Fuller</td>
+<td>Optician</td>
+<td>Eagle Eye</td>
+</tr>
+</table>
+<p>For each Person / Shop Type combination, the table tells us which shop of this type is geographically nearest to the person's home. We assume for simplicity that a single shop cannot be of more than one type.</p>
+<p>The candidate keys of the table are:</p>
+<ul>
+<li>{Person, Shop Type}</li>
+<li>{Person, Nearest Shop}</li>
+
+</ul>
+<p>Because all three attributes are prime attributes (i.e. belong to candidate keys), the table is in 3NF. The table is not in BCNF, however, as the Shop Type attribute is functionally dependent on a non-superkey: Nearest Shop.</p>
+<p>The violation of BCNF means that the table is subject to anomalies. For example, Eagle Eye might have its Shop Type changed to "Optometrist" on its "Fuller" record while retaining the Shop Type "Optician" on its "Davidson" record. This would imply contradictory answers to the question: "What is Eagle Eye's Shop Type?" Holding each shop's Shop Type only once would seem preferable, as doing so would prevent such anomalies from occurring:</p>
+
+<table class="wikitable" style="float:left;" border="1">
+<caption>Shop Near Person</caption>
+<tr>
+<th>Person</th>
+<th>Shop</th>
+</tr>
+<tr>
+<td>Davidson</td>
+
+<td>Eagle Eye</td>
+</tr>
+<tr>
+<td>Davidson</td>
+<td>Snippets</td>
+</tr>
+<tr>
+<td>Wright</td>
+<td>Merlin Books</td>
+</tr>
+<tr>
+<td>Fuller</td>
+
+<td>Doughy's</td>
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Sweeney Todd's</td>
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Eagle Eye</td>
+</tr>
+</table>
+
+
+<table class="wikitable" style="float:left;" border="1">
+
+<caption>Shop</caption>
+<tr>
+<th>Shop</th>
+<th>Shop Type</th>
+</tr>
+<tr>
+<td>Eagle Eye</td>
+<td>Optician</td>
+</tr>
+<tr>
+<td>Snippets</td>
+
+<td>Hairdresser</td>
+</tr>
+<tr>
+<td>Merlin Books</td>
+<td>Bookshop</td>
+</tr>
+<tr>
+<td>Doughy's</td>
+<td>Bakery</td>
+</tr>
+<tr>
+<td>Sweeney Todd's</td>
+
+<td>Hairdresser</td>
+</tr>
+</table>
+<p><br style="clear:both;" /></p>
+<p>In this revised design , the "Shop Near Person" table has a candidate key of {Person, Shop}, and the "Shop" table has a candidate key of {Shop}. Unfortunately, although this design adheres to BCNF, it is unacceptable on different grounds: it allows us to record multiple shops of the same type against the same person. In other words, its candidate keys do not guarantee that the functional dependency {Person, Shop Type} → {Shop} will be respected.</p>
+<p>A design that eliminates all of these anomalies (but does not conform to BCNF) is possible. This design consists of the original "Nearest Shops" table supplemented by the "Shop" table described above.</p>
+<table class="wikitable" style="float:left;" border="1">
+<caption>Nearest Shops</caption>
+
+<tr>
+<th>Person</th>
+<th>Shop Type</th>
+<th>Nearest Shop</th>
+</tr>
+<tr>
+<td>Davidson</td>
+<td>Optician</td>
+<td>Eagle Eye</td>
+</tr>
+<tr>
+
+<td>Davidson</td>
+<td>Hairdresser</td>
+<td>Snippets</td>
+</tr>
+<tr>
+<td>Wright</td>
+<td>Bookshop</td>
+<td>Merlin Books</td>
+</tr>
+<tr>
+<td>Fuller</td>
+
+<td>Bakery</td>
+<td>Doughy's</td>
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Hairdresser</td>
+<td>Sweeney Todd's</td>
+</tr>
+<tr>
+<td>Fuller</td>
+<td>Optician</td>
+
+<td>Eagle Eye</td>
+</tr>
+</table>
+
+
+<table class="wikitable" style="float:left;" border="1">
+<caption>Shop</caption>
+<tr>
+<th>Shop</th>
+<th>Shop Type</th>
+</tr>
+<tr>
+<td>Eagle Eye</td>
+<td>Optician</td>
+
+</tr>
+<tr>
+<td>Snippets</td>
+<td>Hairdresser</td>
+</tr>
+<tr>
+<td>Merlin Books</td>
+<td>Bookshop</td>
+</tr>
+<tr>
+<td>Doughy's</td>
+<td>Bakery</td>
+
+</tr>
+<tr>
+<td>Sweeney Todd's</td>
+<td>Hairdresser</td>
+</tr>
+</table>
+<p><br style="clear:both;" /></p>
+<p>If a referential integrity constraint is defined to the effect that {Shop Type, Nearest Shop} from the first table must refer to a {Shop Type, Shop} from the second table, then the data anomalies described previously are prevented.</p>
+
+
+</div>
+
+<div id="Simulation">
+	<h2>Simulation</h2>
+	 <p>
+
+Lets consider the following example of a university database consisting of a student, the courses he has taken and the instructor for the course. Similar to the third normal form, we represent the dependencies between the attributes of this table using " <Attribute1> : <Attribute2> ", which means that Attribute1 depends on Attribute2.
+
+{{{id=1|
+table = """ Student Course Instructor """
+primary_key = """ Student Course """
+Dependencies = [ 
+                 'Instructor : Course'
+               ]
+///
+}}}
+
+After normalizing the above database to be in BCNF, we get the following.
+
+</p>
+</div>
+
+<div id="Quiz">
+	<h2>Quiz </h2>
+	 <p>
+   <ol>
+   <li> Prove that any relational schema with two attributes is in BCNF.
+   <li> Convert the given Relation Schema into BCNF. TEACH (Student, Course, Instructor).
+   <li> Consider the following relation for publised books. BOOK (Book_title, Authorname, Book_type, price, Author_aff, Publisher). Convert it into BCNF. 
+
+
+</p>
+</div>
+
+
+<div id="References">
+	<h2>References </h2>
+	 <p>
+<ol>
+<li> http://en.wikipedia.org/wiki/Boyce%E2%80%93Codd_normal_form </li>
+<li> Database Management systems by Elmasri and Navathe </li>
+<li> http://databases.about.com/cs/specificproducts/g/bcnf.htm </li>
+<li> http://db.grussell.org/section009.html </li>
+</ol>
+</p>
+</div>
+
+
+<br /><br />
+For providing <b>Feedback</b> please click <a href="http://virtual-labs.ac.in/feedback/">here</a>.<br />
+
+<br />
+- Sponsored by MHRD: <a href="http://virtual-labs.ac.in/nmeict/" target="_blank">click</a>
+- Licensing Terms: <a href="http://virtual-labs.ac.in/licensing/" target="_blank">click</a>
+
+{{{id=5|
+
+///
+}}}
