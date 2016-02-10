@@ -8,7 +8,7 @@
 all:  help-dir
 
 help-dir:
-
+	mkdir -p /root/.sage/sage_notebook.sagenb/home/pub/
 	(rsync -avC lab/* /root/.sage/sage_notebook.sagenb/home/pub/)
 
 #       (touch ${build-dir}; rsync -avC --exclude ${mathjax}.zip lab/* lib/* help themes/${theme}/* ${build-dir})
